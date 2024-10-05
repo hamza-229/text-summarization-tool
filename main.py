@@ -4,6 +4,14 @@ import requests
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 headers = {"Authorization": "Bearer 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"}
 
+API_URL_TR = "https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-en-ar"
+headers_TR = {"Authorization": "Bearer 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"}
+
+def query_tr(payload):
+	response = requests.post(API_URL_TR, headers=headers_TR, json=payload)
+	return response.json()
+	
+
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.json()
@@ -21,3 +29,17 @@ if st.button("Summarize"):
         st.write(output[0]['summary_text'])
     else:
         st.warning("Please enter some text to summarize.")
+
+st.header("Translate Summary to Arabic")
+
+if st.button("Translate to Arabic"):
+    if input_text:
+        output = query({"inputs": input_text})
+        summary_text = output[0]['summary_text']
+        translation = query_tr({
+	        "inputs": summary_text,
+        })
+        st.subheader("Translation in Arabic:")
+        st.write(translation[0]['translation_text'])
+    else:
+        st.warning("Please enter some text to summarize before translating.")

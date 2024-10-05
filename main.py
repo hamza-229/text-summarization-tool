@@ -1,16 +1,23 @@
 import streamlit as st
-from transformers import pipeline
+import requests
 
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
+headers = {"Authorization": "Bearer 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"}
 
+def query(payload):
+	response = requests.post(API_URL, headers=headers, json=payload)
+	return response.json()
+	
 st.title("Text Summarization Tool")
 
 input_text = st.text_area("Enter your text here:", height=200)
 
 if st.button("Summarize"):
     if input_text:
-        summary = summarizer(input_text, max_length=130, min_length=30, do_sample=False)
+        output = query({
+	    "inputs": input_text,
+    })
         st.write("**Summary:**")
-        st.write(summary[0]['summary_text'])
+        st.write(output[0]['summary_text'])
     else:
         st.warning("Please enter some text to summarize.")

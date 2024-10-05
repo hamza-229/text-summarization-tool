@@ -1,7 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 
-summarizer = pipeline("summarization")
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 st.title("Text Summarization Tool")
 

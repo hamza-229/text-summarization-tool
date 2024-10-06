@@ -29,17 +29,16 @@ if st.button("Summarize"):
     if input_text:
         output = query({"inputs": input_text})
         st.write("**Summary:**")
-        st.write(output[0]['summary_text'])
+        summary = output[0]['summary_text']
+        st.write(summary)
     else:
         st.warning("Please enter some text to summarize.")
 
 st.header("Translate Summary to Arabic")
 
 if st.button("Translate to Arabic"):
-    if input_text:
-        output = query({"inputs": input_text})
-        summary_text = output[0]['summary_text']
-        translation = query_tr({"inputs": summary_text})
+    if summary:
+        translation = query_tr({"inputs": summary})
         st.subheader("Translation in Arabic:")
         st.write(translation[0]['translation_text'])
     else:

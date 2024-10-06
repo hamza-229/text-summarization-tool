@@ -34,8 +34,8 @@ if st.button("Summarize"):
 
 st.header("Translate Summary to Arabic")
 
-if st.button("Translate to Arabic"):
-    if summary:
+if st.button("Summarize"):
+    if st.button("Translate to Arabic"):
         translation = query_tr({"inputs": summary})
         st.subheader("Translation in Arabic:")
         st.write(translation[0]['translation_text'])

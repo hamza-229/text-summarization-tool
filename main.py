@@ -7,11 +7,12 @@ headers = {"Authorization": "Bearer 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"}
 API_URL_TR = "https://api-inference.huggingface.co/models/Helsinki-NLP/opus-mt-en-ar"
 headers_TR = {"Authorization": "Bearer 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"}
 
+@st.cache_data(show_spinner=False, ttl=3600)
 def query_tr(payload):
 	response = requests.post(API_URL_TR, headers=headers_TR, json=payload)
 	return response.json()
 	
-
+@st.cache_data(show_spinner=False, ttl=3600)
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.json()
